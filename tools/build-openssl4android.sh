@@ -19,7 +19,9 @@ set -u
 source ./_shared.sh
 
 # Setup architectures, library name and other vars + cleanup from previous runs
-LIB_NAME="openssl-1.0.2k"
+#LIB_NAME="openssl-1.0.2k"
+LIB_NAME="openssl-1.1.0e"
+
 LIB_DEST_DIR=${TOOLS_ROOT}/libs
 [ -d ${LIB_DEST_DIR} ] && rm -rf ${LIB_DEST_DIR}
 [ -f "${LIB_NAME}.tar.gz" ] || wget https://www.openssl.org/source/${LIB_NAME}.tar.gz;
@@ -43,11 +45,12 @@ configure_make() {
     fi
   fi
 
+ #SAB edited to have no-zlib instead of zlib
   ./Configure $ARCH \
               --prefix=${LIB_DEST_DIR}/${ABI} \
               --with-zlib-include=$SYSROOT/usr/include \
               --with-zlib-lib=$SYSROOT/usr/lib \
-              zlib \
+              no-zlib \
               no-asm \
               no-shared \
               no-unit-test
